@@ -1,14 +1,36 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import '../styles/navbar.scss'
 import { Link } from 'react-router-dom'
 import '../styles/navbar.scss'
+import {navbarstyles} from './navbarstyles.js'
 // import './main.js'
 
 
 const Navbar = () => {
+    const [scrollPosition, setScrollPosition] = useState(0);
+
+    useEffect(() => {
+      const handleScroll = () => {
+        setScrollPosition(window.scrollY);
+  
+        const header = document.getElementById('header');
+        if (window.scrollY >= 10) {
+          header.classList.add("scroll-header");
+        } else {
+          header.classList.remove("scroll-header");
+        }
+      };
+  
+      window.addEventListener('scroll', handleScroll);
+  
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }, []);
+
 
     return (
-        <div className='navbar'>
+        <div className={`navbar ${scrollPosition >= 10 ? 'scroll-header' : ''}`}>
             <header className="header" id="header">
                 <nav className="nav container">
                     <Link to='/' className='nav__logo'> SwapMate <i className="bi bi-house-fill"></i></Link>
@@ -17,7 +39,7 @@ const Navbar = () => {
 
                         <ul className="nav__list">
                             <li className="nav__item">
-                                <Link to='/' className='nav__link active_link'>
+                                <Link to='/posts' className='nav__link active_link'>
                                 <i className="bi bi-house"></i>
                                     <span>Home</span>
                                 </Link>
@@ -49,8 +71,8 @@ const Navbar = () => {
                         </ul>
                     </div>
 
-                    {/* <!-- Theme change button --> */}
-                    <i className="bi bi-moon change-theme" id="theme-button"></i>
+                    {/* <!-- Theme change button -->
+                    <i className="bi bi-moon change-theme" id="theme-button"></i> */}
                 </nav>
             </header>
         </div>

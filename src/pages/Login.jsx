@@ -1,14 +1,47 @@
-import React from 'react'
+import React, {useState} from 'react'
 import '../styles/login.scss'
 import build1 from '../images/build-1.jpg'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 const Login = () => {
 
-  
+  const [inputs, setInputs] = useState({
+    username: '',
+    password: ''
+  })
 
+  const [err, setErr] = useState(null);
+  
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+
+    setInputs(prev=>({
+      ...prev,
+      [e.target.name]: e.target.value
+    }))
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try{
+      const res = await axios.post("http://localhost:8800/api/auth/login", inputs)
+      console.log(res.data.token)
+
+      //Setting cookie manually to the document, and Would need to take care of the access_token Manually after logout 
+      document.cookie = "access_token =" + res.data.token;
+
+      //navigate to the home page after that
+      navigate("/posts")
+    }catch(err){
+      setErr(err.response.data);
+    }
+    
+  }
 
   return (
+    <div className='loginbodycontainer'>
     <div className="container_login">
       <input type="checkbox" id="flip" />
       <div className="cover">
@@ -35,19 +68,21 @@ const Login = () => {
               <div className="input-boxes">
                 <div className="input-box">
                   <i className="fas fa-envelope"></i>
-                  <input type="text" placeholder="Enter your email" required />
+                  <input type="text" placeholder="Enter your username" name='username' value={inputs.username} onChange={handleChange} required />
                 </div>
                 <div className="input-box">
                   <i className="fas fa-lock"></i>
-                  <input type="password" placeholder="Enter your password" required />
+                  <input type="password" placeholder="Enter your password" name='password' value={inputs.password} onChange={handleChange} required />
                 </div>
                 {/* <div className="text"><a href="#">Forgot password?</a></div> */}
                 <div className='btn'>
-                  <button type='submit'>Login</button>
+                  <button type='submit' onClick={handleSubmit}>Login</button>
                 </div>
+                <span style={{textAlign:"center", gap:"30px", fontSize:"12px"}}>
+                {err && <p>{err}</p>}
+                </span>
                 <div className="text sign-up-text">
                   Don't have an account?
-                  {/* <a href="signup.html">Sigup now</a> */}
                   <Link to='/register' className='link'> Signup Now!</Link>
                 </div>
               </div>
@@ -55,6 +90,7 @@ const Login = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   )
 }

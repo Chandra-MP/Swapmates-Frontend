@@ -8,6 +8,7 @@ import contact from '../images/contact.png'
 import home from '../images/home.jpg'
 import value from '../images/value.jpg'
 import Swiper from '../components/swiper_corousel'
+import Navbar from '../components/Navbar.jsx'
 import '../styles.scss'
 
 
@@ -16,7 +17,8 @@ const Landing = () => {
 
     
   return (
-    
+      <>  
+      <Navbar/>  
       <div className="main">
 
             {/* <!--==================== HOME ====================--> */}
@@ -34,7 +36,7 @@ const Landing = () => {
                         <form action="" className="home__search">
                             <i className="bi bi-geo-alt-fill"></i>
                             <input type="search" placeholder="Search by location..." className="home__search-input" />
-                            <button className="button">Search</button>
+                            <button className="button"><h6 style={{fontWeight:"300"}}>Search</h6></button>
                         </form>
 
                         <div className="home__value">
@@ -321,6 +323,7 @@ const Landing = () => {
                 </div>
             </section>
         </div>
+        </>
   )
 }
 

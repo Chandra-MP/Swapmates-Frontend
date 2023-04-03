@@ -12,7 +12,7 @@ const Register = () => {
   
   const [err, setError] = useState(null)
   const navigate = useNavigate()
-
+  const [location, setLocation] = useState("");
  
 
   useEffect(() => {
@@ -30,13 +30,13 @@ const Register = () => {
     );
   }, []);
 
-  const [location, setLocation] = useState("");
+
   const [inputs, setInputs] = useState({
+    user_id: '',
     name:'',
     email: '',
     username: '',
     password: '',
-    location: location
   })
 
 
@@ -53,16 +53,18 @@ const Register = () => {
       console.log(inputs)
       const res = await axios.post("http://localhost:8800/api/auth/register", inputs);
       console.log(res);
+      navigate('/')
     }catch(err){
       setError(err.response.data)
       setTimeout(()=>{
-        // navigate("/login")
+        navigate("/login")
       }, 2000)
     }
   }
 
 
   return (
+    <div className='loginbodycontainer' >
     <div className="container_login">
       <input type="checkbox" id="flip" />
       <div className="cover">
@@ -117,6 +119,7 @@ const Register = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   )
 }

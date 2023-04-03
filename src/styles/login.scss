@@ -24,7 +24,7 @@ $border-color_1: rgb(255 123 0);
 	box-sizing: border-box;
 	font-family: $font-family_1;
 }
-body {
+.loginbodycontainer {
 	min-height: 100vh;
 	display: flex;
 	align-items: center;
@@ -156,6 +156,7 @@ body {
 		width: calc(100% / 2 - 25px);
 	}
 	.input-box {
+
 		input {
 			height: 100%;
 			width: 100%;
@@ -166,6 +167,8 @@ body {
 			font-weight: 500;
 			border-bottom: 2px solid rgba(0, 0, 0, 0.2);
 			transition: all 0.3s ease;
+			background-color: white;
+			color: black;
 			&:focus {
 				border-color: $border-color_1;
 			}

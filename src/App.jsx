@@ -5,13 +5,11 @@ import Home from './pages/Home.jsx'
 import Register from './pages/Register.jsx'
 import Login from './pages/Login.jsx'
 import User from './pages/User.jsx'
-import Post from './pages/Post.jsx'
-import '../src/styles.scss'
-import '../src/styles.scss'
-
-
-
+import Posts from './pages/Posts.jsx'
+import Single from './pages/Posts.jsx'
+import Writepost from './pages/Writepost.jsx'
 import Footer from './components/Footer.jsx'
+import Post from './pages/Posts.jsx'
 
 import {
   createBrowserRouter,
@@ -20,10 +18,14 @@ import {
   Outlet,
 } from "react-router-dom";
 
+// import '../src/styles.scss'
+// import '../src/styles.scss'
+
+
 const Layout = () =>{
   return (
     <>
-    <Navbar />
+    {/* <Navbar /> */}
     <Outlet/>
     <Footer/>
     </>
@@ -44,9 +46,17 @@ const router = createBrowserRouter([
         element: <Home/>
       },
       {
-        path: "/post/:id",
-        element: <Post />
+        path: "/posts",
+        element: <Posts/>
       },
+      {
+        path: "/post/:id",
+        element: <Post id = ":id" />
+      },
+      {
+        path: '/write',
+        element: <Writepost/>
+      }
     ]
   },
   {
@@ -60,7 +70,7 @@ const router = createBrowserRouter([
   {
     path: '/user/:id',
     element: <User/>
-  }
+  },
 ])
 
 const App = () => {
